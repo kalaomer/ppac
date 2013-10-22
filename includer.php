@@ -6,7 +6,7 @@
  * 2013
  *
  * Load PPAC Includer mode!
- * This mode is design for include modules and we try to write veri light this mode.
+ * This mode is design for include modules and we try to write very light.
  *
  */
 

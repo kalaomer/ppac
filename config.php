@@ -3,8 +3,9 @@
 /*
  * v0.0.1
  *
+ * Last edit by Ömer KALA (kalaomer@hotmail.com)
  * PPAC configration file.
- * All configrations is in this file.
+ * All configrations are in this file.
  */
 
 $config["php_modules"] = array(

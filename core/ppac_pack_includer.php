@@ -1,7 +1,7 @@
 <?php
 
 /*
- *
+ * Info..
  */
 
 class PPAC_PACK_INCLUDER {
@@ -157,10 +157,13 @@ class PPAC_PACK_INCLUDER {
 	}
 
 	/**
-	 * Script Base'e kadar klasörleri tarar.
+	 * Module searcher.
 	 */
 	private static function getModulePath( $moduleName, $start = null, $finish = null ) {
 
+		/*
+		 * If this module is been cache.
+		 */
 		if ( isset( self::$modulePathCache[ $moduleName ] ) ) {
 			return self::$modulePathCache[ $moduleName ];
 		} elseif ($start == null) {
@@ -187,6 +190,9 @@ class PPAC_PACK_INCLUDER {
 
 		$targetDirs[] = $finish . $privatePhpModulesFolderName . DS;
 
+		/*
+		 * Set first seach area, is public folder first or last?
+		 */
 		if (self::config("php_modules.public.add_first")) {
 			array_unshift($targetDirs, self::config("php_modules.public.path")); 
 		}
@@ -194,8 +200,6 @@ class PPAC_PACK_INCLUDER {
 		{
 			array_push($targetDirs, self::config("php_modules.public.path")); 
 		}
-
-		var_dump("targetDirs", $targetDirs);
 		
 		foreach ($targetDirs as $target) {
 			if (is_dir( $target . $moduleName . DS )) {
