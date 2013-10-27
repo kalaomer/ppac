@@ -3,7 +3,7 @@
 
 PPAC'in yapımında tamamen node.js'den esinlenilmiştir. Çalışma prensipleri çok benzerdir bunun için.
 
-PPAC'in asıl amacı paketler halindeki PHP kodlarına kolay ulaşımı sağlamaktır. Paketlere en basit şekilde ulaşmak, onları kullanmak ve güncellemek(ileriki veriyonda) PPAC'in yazılmasındaki asıl amaçtır. Ayrıca Hosting gibi yapılarda da çalışması ve performans olarak gayet tatmin edici olması PPAC'i güçlü yapan özelliklerindendir.
+PPAC'in asıl amacı paketler halindeki PHP kodlarına kolay ulaşımı sağlamaktır. Paketlere en basit şekilde ulaşmak, onları kullanmak ve güncellemek(ileriki versiyonda) PPAC'in yazılmasındaki asıl amaçtır. Ayrıca Hosting gibi yapılarda da çalışması ve performans olarak gayet tatmin edici olması PPAC'i güçlü yapan özelliklerindendir.
 
 PPAC'in yazılmasında node.js'den esinlenildiği iletilmişti. Node.js'de bulunan node_modules klasörü ve işlevi aynı şekilde php_modules adlı klasörde PPAC'de de uygulanmıştır. Buna ek olarak PPAC'in kurulu olduğu dizinde ortak bir modül havuzu yer almaktadır aynı node.js'deki gibi.
 
