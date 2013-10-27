@@ -63,12 +63,9 @@ Sonrasında Modül'deki çağrılacak dosya belirlenir. Bunun için namespace'de
 
 ### PPAC'e Modül Yazmak
 PPAC'e modül yazmak son derece kolay ve zahmetsizdir. Temelde iki dosyaya sahip olmalıdır: ```package.json``` ve ```index.php```. ```package.json``` dosyası modül hakkındaki bilgileri barındırmaktadır. ```package.json``` dosyasında mutlak bildirilmesi gereken değer(ler):
-	- name
-		-- Modül İsmi
-	- version
-		-- Modül Versiyonu
-	- description
-		-- Modül açıklaması
+	* name -- Modül İsmi
+	* version -- Modül Versiyonu
+	* description -- Modül açıklaması
 
 Örnek bir ```package.json``` dosyası:
 ```
