@@ -1,6 +1,6 @@
 {
   "name": "fooClass",
-  "description": "Some module for test PPAC",
+  "description": "Some module for PPAC",
   "mainFile": "main.php",
   "version": "0.0.1",
   "author": {

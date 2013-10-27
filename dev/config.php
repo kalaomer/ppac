@@ -51,12 +51,12 @@ $config["php_modules"] = array(
 			 * If module(or module file) added and request is want to add again...
 			 * This is very sensitive opition! So be careful!
 			 */
-			"reloadable" => true,
+			"reloadable" => false,
 			/*
 			 * When require some file, add() function return require's return value.
 			 * This is very sensitive opition! So be careful!
 			 */
-			"returnRequire" => true,
+			"returnRequire" => false,
 			/*
 			 * When Class isn't added and need it, Add Class automaticly..
 			 * This is very sensitive opition! So be careful!

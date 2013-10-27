@@ -9,42 +9,77 @@ PPAC'in yazılmasında node.js'den esinlenildiği iletilmişti. Node.js'de bulun
 
 PPAC'in şu an için sadece PACKAGE_INCLUDER'ı vardır. Yani sadece havuzlardan modül veya dosyaları yüklenebilmektedir. İleri ki safhalarda internet üzerinde oluşturulacak ortak bir havuzdan PHP paketleri indirmek mümkün olacaktır.(Projeye gösterilecek destek ile karar verilecek bir aşama)
 
-### PPAC Çalışma Prensibi
-PPAC, node.js'deki ```require``` sistemi ile aynı şekilde çalışmaktadır(bkz. http://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders).
-
-Öncelikle yüklü olan paketlerin belirli bir standartta olması gerekmektedir.(https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md). PPAC ilk require işlemi ile eklendiğinde, eklendiği dosyanın klasörünü tavan noktası olarak ele alır. Bu değer havuz ararken sınır olarak kullanılır. Daha sonra PPAC'den Paket veya Class yüklenmesi istediğinde, bu isteğin yollandığı dosya taban olarak kabul edilir. Sonrasında eklenmek istenen öğenin paket adresi eğer bilinmiyor ise taban ile tavan arasındaki havuzlara bakılır. Eğer orada bulunamaz ise sonrasında ortak havuza bakılır(Ortak havuza önce bakılması önceliği config.php'den ayarlanabilmektedir).
-
-### PPAC Kurulumu
-=======
-PPAC'in çalışma prensibinde tamamen node.js'den esinlenilmiştir. Çalışma prensipleri de çok benzerdir bunun için.
-
-PPAC ortak bir havuzda PHP paketlerini tutmaktadır. Buna ek olarak projeler kendilerine has havuzlarda kullanabilirler.
-
-PPAC'in şu an için sadece PACKAGE_INCLUDER'ı vardır. Yani sadece havuzlardan modül veya dosyaları yüklenebilmektedir. İleri ki safhalarda internet üzerinde oluşturulacak ortak bir havuzdan PHP paketleri indirmek mümkün olacaktır.
-
-PPAC'in asıl avantajı, hostlarda da kullanılabilmesidir. Sadece PPAC dosyalarının host'a kopyalanıp gerekli senkronizasyonların yapılması yeterlidir.
-
 ### PPAC kurulumu
 PPAC kurulumu gayet basittir. 'dev' klasörü içindeki dosyaları istediğiniz bir yere kopyalamanız yeterlidir.
 
 ### PPAC ile Paket eklemek
 Önce PPAC'i require ile eklemeniz gerekir.
 ```
-<<<<<<< HEAD
-require "../ppac/dev/includer.php";
+require ".../ppac/includer.php";
 ```
 Daha sonrasında PPAC ile yüklü olan bir paketi çağırmak için
 ```PPAC::add( $paketYolu )```
 kullanılır.
 
-Örneğin PPAC içinde hazırda olarak verilen EasyArray'ı eklemek için ```PPAC::add("EasyArray")``` denmesi yeterlidir. PPAC otomatik olarak prejedeki ve ortak alandaki havuzu tarayarak EasyArray paketini arar ve bulup ekler.
+Örneğin PPAC içinde hazırda olarak verilen EasyArray'ı eklemek için ```PPAC::add("EasyArray")``` denmesi yeterlidir. PPAC otomatik olarak projedeki ve ortak alandaki havuzu tarayarak EasyArray paketini arar ve bulup ekler.
 
-### PPAC ile Otomatik Paket Eklemek
-=======
-require "../dev/includer.php";
+##### Dosyayı Tekrar Ekle
+PPAC default olarak ekli olan dosyayı tekrar eklemez. Bunu ```config.php``` dosyasından "php_modules=>common=>module=>reloadble" adresinindeki değeri ```true``` yaparak, dosyaları tekrar tekrar yükleme özelliğini default yapabilirsiniz. Eğer default yapmadan anlık olarak tekrar yükletmek istiyorsanız:
 ```
-Daha sonrasında PPAC ile yüklü olan bir paketi çağırmak için
+PPAC::add( $paketYolu, array("reloadable"=>true) )
 ```
-PPAC::add( $pakeAdi )
+şeklinde belirtmeniz gerekir.
+
+##### Require Sonucunu Almak
+PPAC default olarak return işleminin sonucunu döndürmemektedir. Dosya eklendiyse ```true```, eklenmediyse ```false``` dönmektedir. Bunu ```config.php``` dosyasından "php_modules=>common=>module=>returnRequire" adresinindeki değeri ```true``` yaparak, require çıktısını döndürme özelliğini default yapabilirsiniz. Eğer default yapmadan anlık olarak tekrar yükletmek istiyorsanız:
 ```
-kullanılır. 
+PPAC::add( $paketYolu, array("returnRequire"=>true) )
+```
+şeklinde belirtmeniz gerekir.
+
+##### Önce Ortak Havuz da Arama Yaptırma
+PPAC normalde önce proje içinde arama yapar, en son ortak havuza bakar. Bazı projelerde ortak havuzu direk aramak daha mantıklı olabilir. Bu özelliği ```config.php``` dosyasından "php_modules=>public=>addFirst" adresinindeki değeri ```true``` yaparak değiştirebilirsiniz. Eğer sadece o proje için değiştirmek istiyorsanız:
+```
+PPAC::config( "php_module.public.addFirst", true )
+```
+şeklinde belirtmeniz gerekir.
+
+### PPAC'e Otomatik Paket Yükleme Yaptırmak
+PPAC ile ```::add(...)``` fonksiyonunu kullanmadan paket veya dosya eklemek de mümkündür. Bunun için ```spl_autoload_register()``` fonksiyonu ile PPAC kendisini otomatik olarak yetkilendirir(Bunu değiştirmek için ```config.php``` `dosyasından "php_modules=>common=>autoLoadClass" adresinindeki değeri düzenleyebilirsiniz). Bu sayede herhangi bir fazladan işlem yapmadan otomatik olarak yükleme yaptırabilirsiniz. Ör:
+```
+//	PPAC eklendi.
+require ".../ppac/includer.php";
+
+//	Otomatik olarak PPAC::add("someModule\\Core\\Base"); fonksiyonu tetiklendi.
+$some = new someModule\Core\Base;
+```
+
+### PPAC Çalışma Prensibi
+PPAC, node.js'deki ```require``` sistemi ile aynı şekilde çalışmaktadır(bkz. http://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders).
+
+Öncelikle yüklü olan paketlerin belirli bir standartta olması gerekmektedir(https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md). PPAC ilk require işlemi ile eklendiğinde(```require ".../ppac/includer.php"```) eklendiği dosyanın klasörünü tavan noktası olarak ele alır. Bu değer havuz ararken sınır olarak kullanılır. Daha sonra PPAC'den modül veya Class yüklenmesi istediğinde, önce modül adresi belirlenir. Bu isteğin yollandığı dosya taban olarak kabul edilir. Sonrasında eklenmek istenen öğenin paket adresi eğer bilinmiyor ise taban ile tavan arasındaki havuzlara bakılır. Eğer orada bulunamaz ise sonrasında ortak havuza bakılır. Modül yolu bu şekilde aranır.
+
+Sonrasında Modül'deki çağrılacak dosya belirlenir. Bunun için namespace'den yararlanılır. Eğer çağrılan şey modül ise(Ör: ```PPAC::add("someModule")```) hedef dosyayı belirlemek için modülün ayar dosyası açılır ve ```mainFile``` değeri hedef dosya olarak belirlenir ve o dosya yüklenir. Eğer modül değil ise dosya çağrıldıysa(Ör: ````PPAC::add("someModule\\Core\\BASE")```) sonuna ```.php``` ifadesi eklenerek hedef dosya belirlenir ve eklenir.
+
+### PPAC'e Modül Yazmak
+PPAC'e modül yazmak son derece kolay ve zahmetsizdir. Temelde iki dosyaya sahip olmalıdır: ```package.json``` ve ```index.php```. ```package.json``` dosyası modül hakkındaki bilgileri barındırmaktadır. ```package.json``` dosyasında bildirilmesi gereken değer(ler):
+	- name -- Modül İsmi
+	- version -- Modül Versiyonu
+	- description -- Modül açıklaması
+	- mainFile -- Modül'ün ana dosyası
+
+Örnek bir ```package.json``` dosyası:
+```
+{
+  "name": "someModule",
+  "description": "Some module for PPAC",
+  "mainFile": "index.php",
+  "version": "0.0.1"
+}
+```
+
+```package.json``` dosyasında belirtilen ```mainFile``` değerine göre gerekli olan ```index.php``` dosyasının ismi değiştirilebilir.
+
+____
+
+PPAC daha yeni başlanmış bir projedir ve ilerletilmeye çalışılmaktadır. PPAC hakkında teknik destek için kalaomer@hotmail.com adresinden iletişimde bulunabilirsiniz.

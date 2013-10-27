@@ -174,10 +174,8 @@ class PPAC_PACK_INCLUDER {
 				return true;
 			}
 		}
-		else
-		{
-			return false;
-		}
+		
+		return false;
 
 	}
 
