@@ -62,11 +62,13 @@ PPAC, node.js'deki ```require``` sistemi ile aynı şekilde çalışmaktadır(bk
 Sonrasında Modül'deki çağrılacak dosya belirlenir. Bunun için namespace'den yararlanılır. Eğer çağrılan şey modül ise(Ör: ```PPAC::add("someModule")```) hedef dosyayı belirlemek için modülün ayar dosyası açılır ve ```mainFile``` değeri hedef dosya olarak belirlenir ve o dosya yüklenir. Eğer modül değil ise dosya çağrıldıysa(Ör: ````PPAC::add("someModule\\Core\\BASE")```) sonuna ```.php``` ifadesi eklenerek hedef dosya belirlenir ve eklenir.
 
 ### PPAC'e Modül Yazmak
-PPAC'e modül yazmak son derece kolay ve zahmetsizdir. Temelde iki dosyaya sahip olmalıdır: ```package.json``` ve ```index.php```. ```package.json``` dosyası modül hakkındaki bilgileri barındırmaktadır. ```package.json``` dosyasında bildirilmesi gereken değer(ler):
-	- name -- Modül İsmi
-	- version -- Modül Versiyonu
-	- description -- Modül açıklaması
-	- mainFile -- Modül'ün ana dosyası
+PPAC'e modül yazmak son derece kolay ve zahmetsizdir. Temelde iki dosyaya sahip olmalıdır: ```package.json``` ve ```index.php```. ```package.json``` dosyası modül hakkındaki bilgileri barındırmaktadır. ```package.json``` dosyasında mutlak bildirilmesi gereken değer(ler):
+	- name
+		-- Modül İsmi
+	- version
+		-- Modül Versiyonu
+	- description
+		-- Modül açıklaması
 
 Örnek bir ```package.json``` dosyası:
 ```
@@ -78,8 +80,26 @@ PPAC'e modül yazmak son derece kolay ve zahmetsizdir. Temelde iki dosyaya sahip
 }
 ```
 
-```package.json``` dosyasında belirtilen ```mainFile``` değerine göre gerekli olan ```index.php``` dosyasının ismi değiştirilebilir.
+Not: Bu değerler zamanla eklenebilir veya düzeltilebilir.
 
+##### Opsiyonel Özellikler
+
+###### mailFile
+```mainFile``` ile modülün ana dosya yolu belirtilir.
+Not: ```package.json``` dosyasında belirtilen ```mainFile``` değerine göre gerekli olan ```index.php``` dosyasının ismi değiştirilebilir.
+
+###### firstLoad
+```firstLoad``` ile modülün herhangi bir dosyası eklenmeden önce yüklenmesi istenen modül(ler)/dosya(lar) belirtilir. Bu sayede bağımlı olunan modül(ler)/dosya(lar) önceden eklenir.
+Ör:
+```
+{
+  ... ,
+  "firstLoad" : [
+  	"someModule",
+  	"otherModule\\Core\\Base",
+  ]
+}
+```
 ____
 
 PPAC daha yeni başlanmış bir projedir ve ilerletilmeye çalışılmaktadır. PPAC hakkında teknik destek için kalaomer@hotmail.com adresinden iletişimde bulunabilirsiniz.
