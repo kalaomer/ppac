@@ -6,7 +6,7 @@
 
 class PPAC_PACK_INCLUDER {
 
-	Public static $ver = "0.0.1";
+	Public static $ver = "0.1.0";
 
 	/*
 	 * Who use the PPAC Main Script path.
@@ -29,6 +29,11 @@ class PPAC_PACK_INCLUDER {
 	 */
 	public static $config = array();
 
+	/*
+	 * Logs.
+	 */
+	public static $logs = array();
+
 	/**
 	 * Setup!
 	 */
@@ -43,7 +48,7 @@ class PPAC_PACK_INCLUDER {
 		require_once PPAC_CORE . "ppac_conf.php";
 		PPAC_CONF::setup();
 
-		if (self::config("php_modules.common.module.auto_load_class")) {
+		if (self::config("php_modules.common.module.autoLoadClass")) {
 			spl_autoload_register('PPAC_PACK_INCLUDER::add');
 		}
 	}
@@ -66,7 +71,7 @@ class PPAC_PACK_INCLUDER {
 
 		$opt = array_merge( array(
 			"reloadable" => self::config( "php_modules.common.module.reloadable" ),
-			"return_require" => self::config( "php_modules.common.module.return_require" )
+			"returnRequire" => self::config( "php_modules.common.module.returnRequire" )
 			),
 			$opt
 		);
@@ -102,7 +107,7 @@ class PPAC_PACK_INCLUDER {
 		 * Module Path didn't find..
 		 */
 		if (false === $modulePath = self::getModulePath( $module, $searchFromFolder)) {
-			trigger_error( "Module didn't find: $module" );
+			self::log("Module didn't find: $module", "errors");
 			return;
 		}
 
@@ -110,12 +115,27 @@ class PPAC_PACK_INCLUDER {
 		$moduleJSON = self::getModuleJSON( $module );
 
 		/*
+		 * If module needs first load some modules, Load first them.
+		 */
+		if (isset($moduleJSON["firstLoad"])) {
+			foreach ($moduleJSON["firstLoad"] as $path) {
+				self::add($path, array("reloadable"=>false));
+			}
+		}
+
+		/*
 		 * If way is only one,
 		 * This is adding module procedure,
 		 * define file from module settings file.
 		 */
 		if ( $paths == array() ) {
-			$file = $moduleJSON["main"];
+			/*
+			 * Decide main file name.
+			 */
+			$file = isset($moduleJSON["mainFile"])?
+				$moduleJSON["mainFile"]
+					:
+				self::config("php_modules.common.module.mainFile");
 		} else {
 			$file = array_pop( $paths ) . ".php";
 		}
@@ -127,6 +147,11 @@ class PPAC_PACK_INCLUDER {
 		}
 
 		$realPath = realpath( $modulePath . $folder . $file );
+
+		if (!file_exists($realPath)) {
+			self::log("File didn't find! $realPath", "errors");
+			return;
+		}
 
 		/*
 		 * If this file didn't added or reloadable is active, then require it!
@@ -140,7 +165,7 @@ class PPAC_PACK_INCLUDER {
 			/*
 			 * If return require's return is active, return it!
 			 */
-			if ($opt["return_require"]) {
+			if ($opt["returnRequire"]) {
 				return require $realPath;
 			}
 			else
@@ -176,7 +201,7 @@ class PPAC_PACK_INCLUDER {
 
 		$intermediateDirs = substr( $start , strlen($finish) );
 
-		$privatePhpModulesFolderName = self::config( "php_modules.private.folder_name" );
+		$privatePhpModulesFolderName = self::config( "php_modules.private.folderName" );
 
 		if ( $intermediateDirs != false ) {
 			do {
@@ -193,7 +218,7 @@ class PPAC_PACK_INCLUDER {
 		/*
 		 * Set first seach area, is public folder first or last?
 		 */
-		if (self::config("php_modules.public.add_first")) {
+		if (self::config("php_modules.public.addFirst")) {
 			array_unshift($targetDirs, self::config("php_modules.public.path")); 
 		}
 		else
@@ -217,12 +242,16 @@ class PPAC_PACK_INCLUDER {
 
 		$modulePath = self::getModulePath( $module );
 
-		if ( file_exists( $modulePath . self::config("php_modules.common.module.settings_file_name") ) )
-			return json_decode(file_get_contents( $modulePath . self::config("php_modules.common.module.settings_file_name") ), true);
+		if ( file_exists( $modulePath . self::config("php_modules.common.module.settingsFileName") ) )
+			return json_decode(file_get_contents( $modulePath . self::config("php_modules.common.module.settingsFileName") ), true);
 
-		trigger_error( "Module JSON didn't find. Module: $module. Path: $modulePath" );
+		self::log("Module JSON didn't find. Module: $module. Path: $modulePath");
 
 		return false;
+	}
+
+	private function log( $message, $logCat = "warnings" ) {
+		self::$logs[ $logCat ][] = $message;
 	}
 
 }

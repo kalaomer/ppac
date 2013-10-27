@@ -1,0 +1,10 @@
+{
+  "name": "fooClass",
+  "description": "Some module for test PPAC",
+  "mainFile": "main.php",
+  "version": "0.0.1",
+  "author": {
+    "name": "Ömer Kala",
+    "email": "kalaomer@hotmail.com"
+  }
+}
