@@ -1,7 +1,6 @@
 # PPAC ( PHP PACKAGE LOADER )
 ### TR Anlatım
 
-<<<<<<< HEAD
 PPAC'in yapımında tamamen node.js'den esinlenilmiştir. Çalışma prensipleri çok benzerdir bunun için.
 
 PPAC'in asıl amacı paketler halindeki PHP kodlarına kolay ulaşımı sağlamaktır. Paketlere en basit şekilde ulaşmak, onları kullanmak ve güncellemek(ileriki veriyonda) PPAC'in yazılmasındaki asıl amaçtır. Ayrıca Hosting gibi yapılarda da çalışması ve performans olarak gayet tatmin edici olması PPAC'i güçlü yapan özelliklerindendir.
@@ -26,7 +25,6 @@ PPAC'in şu an için sadece PACKAGE_INCLUDER'ı vardır. Yani sadece havuzlardan
 PPAC'in asıl avantajı, hostlarda da kullanılabilmesidir. Sadece PPAC dosyalarının host'a kopyalanıp gerekli senkronizasyonların yapılması yeterlidir.
 
 ### PPAC kurulumu
->>>>>>> ce3fe115ef5c7effe01844418a9311cbccd57a82
 PPAC kurulumu gayet basittir. 'dev' klasörü içindeki dosyaları istediğiniz bir yere kopyalamanız yeterlidir.
 
 ### PPAC ile Paket eklemek
@@ -50,4 +48,3 @@ Daha sonrasında PPAC ile yüklü olan bir paketi çağırmak için
 PPAC::add( $pakeAdi )
 ```
 kullanılır. 
->>>>>>> ce3fe115ef5c7effe01844418a9311cbccd57a82
