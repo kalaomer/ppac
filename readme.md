@@ -3,7 +3,7 @@
 
 PPAC'in yapımında tamamen node.js'den esinlenilmiştir. Çalışma prensipleri çok benzerdir bunun için.
 
-PPAC'in asıl amacı paketler halindeki PHP kodlarına kolay ulaşımı sağlamaktır. Paketlere en basit şekilde ulaşmak, onları kullanmak ve güncellemek(ileriki veriyonda) PPAC'in yazılmasındaki asıl amaçtır. Ayrıca Hosting gibi yapılarda da çalışması ve performans olarak gayet tatmin edici olması PPAC'i güçlü yapan özelliklerindendir.
+PPAC'in asıl amacı paketler halindeki PHP kodlarına kolay ulaşımı sağlamaktır. Paketlere en basit şekilde ulaşmak, onları kullanmak ve güncellemek(ileriki versiyonda) PPAC'in yazılmasındaki asıl amaçtır. Ayrıca Hosting gibi yapılarda da çalışması ve performans olarak gayet tatmin edici olması PPAC'i güçlü yapan özelliklerindendir.
 
 PPAC'in yazılmasında node.js'den esinlenildiği iletilmişti. Node.js'de bulunan node_modules klasörü ve işlevi aynı şekilde php_modules adlı klasörde PPAC'de de uygulanmıştır. Buna ek olarak PPAC'in kurulu olduğu dizinde ortak bir modül havuzu yer almaktadır aynı node.js'deki gibi.
 
@@ -63,9 +63,9 @@ Sonrasında Modül'deki çağrılacak dosya belirlenir. Bunun için namespace'de
 
 ### PPAC'e Modül Yazmak
 PPAC'e modül yazmak son derece kolay ve zahmetsizdir. Temelde iki dosyaya sahip olmalıdır: ```package.json``` ve ```index.php```. ```package.json``` dosyası modül hakkındaki bilgileri barındırmaktadır. ```package.json``` dosyasında mutlak bildirilmesi gereken değer(ler):
-	* name -- Modül İsmi
-	* version -- Modül Versiyonu
-	* description -- Modül açıklaması
+- name(Modül İsmi)
+- version(Modül Versiyonu)
+- description(Modül açıklaması)
 
 Örnek bir ```package.json``` dosyası:
 ```
