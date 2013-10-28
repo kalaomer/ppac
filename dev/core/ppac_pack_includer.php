@@ -107,7 +107,7 @@ class PPAC_PACK_INCLUDER {
 		 * Module Path didn't find..
 		 */
 		if (false === $modulePath = self::getModulePath( $module, $searchFromFolder)) {
-			self::log("Module didn't find: $module", "errors");
+			self::log('Module didn\'t find:' . $module, "errors");
 			return;
 		}
 
@@ -149,7 +149,7 @@ class PPAC_PACK_INCLUDER {
 		$realPath = realpath( $modulePath . $folder . $file );
 
 		if (!file_exists($realPath)) {
-			self::log("File didn't find! $realPath", "errors");
+			self::log('File didn\'t find! ' . $realPath, "errors");
 			return;
 		}
 
@@ -243,7 +243,7 @@ class PPAC_PACK_INCLUDER {
 		if ( file_exists( $modulePath . self::config("php_modules.common.module.settingsFileName") ) )
 			return json_decode(file_get_contents( $modulePath . self::config("php_modules.common.module.settingsFileName") ), true);
 
-		self::log("Module JSON didn't find. Module: $module. Path: $modulePath");
+		self::log('Module JSON didn\'t find. Module: ' . $module . '. Path: ' . $modulePath);
 
 		return false;
 	}
