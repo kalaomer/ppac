@@ -6,21 +6,21 @@
 
 class PPAC_CONF {
 
-	public static $ver = "0.0.1";
+	Public static $ver = "0.0.1";
 
 	/**
 	 * Configration File.
 	 */
-	public static $data;
+	Public static $data;
 
 	/**
 	 * Load Configration From file.
 	 */
-	public static function setup() {
+	Public static function setup() {
 		self::$data = require PPAC_ROOT . "config.php";
 	}
 
-	public static function get( $path ) {
+	Public static function get( $path ) {
 
 		//	Yol Parçalanıyor.
 		$path = explode(".", $path);
@@ -43,7 +43,7 @@ class PPAC_CONF {
 		return $target_data;
 	}
 
-	public static function set( $path, $val ) {
+	Public static function set( $path, $val ) {
 		
 		//	Yol Parçalanıyor.
 		$path = explode(".", $path);

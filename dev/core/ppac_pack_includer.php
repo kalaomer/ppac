@@ -6,38 +6,38 @@
 
 class PPAC_PACK_INCLUDER {
 
-	public static $ver = "0.1.0";
+	Public static $ver = "0.1.0";
 
 	/*
 	 * Who use the PPAC Main Script path.
 	 * It's limit for the searching.
 	 */
-	public static $scriptPath;
+	Public static $scriptPath;
 
 	/**
 	 * Determined Module paths are caching here.
 	 */
-	public static $modulePathCache = array();
+	Public static $modulePathCache = array();
 
 	/**
 	 * Inluded files.
 	 */
-	public static $includedFiles = array();
+	Public static $includedFiles = array();
 
 	/**
 	 * Configrations.
 	 */
-	public static $config = array();
+	Public static $config = array();
 
 	/*
 	 * Logs.
 	 */
-	public static $logs = array();
+	Public static $logs = array();
 
 	/**
 	 * Setup!
 	 */
-	public static function setup() {
+	Public static function setup() {
 
 		//	Getting Script Path for Module Folder Searching.
 		self::$scriptPath = str_replace("/", DS, dirname( $_SERVER["SCRIPT_FILENAME"] ) . DS );
@@ -53,7 +53,7 @@ class PPAC_PACK_INCLUDER {
 		}
 	}
 
-	public static function config() {
+	Public static function config() {
 		$args = func_get_args();
 
 		//	If Args count = 1, return config key by arg.
@@ -67,7 +67,7 @@ class PPAC_PACK_INCLUDER {
 		}
 	}
 
-	public static function add( $paths, $opt = array() ) {
+	Public static function add( $paths, $opt = array() ) {
 
 		$opt = array_merge( array(
 			"reloadable" => self::config( "php_modules.common.module.reloadable" ),
@@ -214,14 +214,14 @@ class PPAC_PACK_INCLUDER {
 		$targetDirs[] = $finish . $privatePhpModulesFolderName . DS;
 
 		/*
-		 * Set first seach area, is public folder first or last?
+		 * Set first seach area, is Public folder first or last?
 		 */
-		if (self::config("php_modules.public.addFirst")) {
-			array_unshift($targetDirs, self::config("php_modules.public.path")); 
+		if (self::config("php_modules.Public.addFirst")) {
+			array_unshift($targetDirs, self::config("php_modules.Public.path")); 
 		}
 		else
 		{
-			array_push($targetDirs, self::config("php_modules.public.path")); 
+			array_push($targetDirs, self::config("php_modules.Public.path")); 
 		}
 		
 		foreach ($targetDirs as $target) {
