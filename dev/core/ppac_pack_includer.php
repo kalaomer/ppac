@@ -6,18 +6,18 @@
 
 class PPAC_PACK_INCLUDER {
 
-	Public static $ver = "0.1.0";
+	public static $ver = "0.1.0";
 
 	/*
 	 * Who use the PPAC Main Script path.
 	 * It's limit for the searching.
 	 */
-	Public static $scriptPath;
+	public static $scriptPath;
 
 	/**
 	 * Determined Module paths are caching here.
 	 */
-	Public static $modulePathCache = array();
+	public static $modulePathCache = array();
 
 	/**
 	 * Inluded files.
