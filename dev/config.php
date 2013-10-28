@@ -47,7 +47,7 @@ $config["php_modules"] = array(
 			 * This is very sensitive opition! So be careful!
 			 */
 			"settingsFileName" => "package.json",
-			/**
+			/*
 			 * If module(or module file) added and request is want to add again...
 			 * This is very sensitive opition! So be careful!
 			 */
