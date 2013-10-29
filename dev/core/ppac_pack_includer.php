@@ -71,7 +71,8 @@ class PPAC_PACK_INCLUDER {
 
 		$opt = array_merge( array(
 			"reloadable" => self::config( "php_modules.common.module.reloadable" ),
-			"returnRequire" => self::config( "php_modules.common.module.returnRequire" )
+			"returnRequire" => self::config( "php_modules.common.module.returnRequire" ),
+			"searchFromFolder" => false
 			),
 			$opt
 		);
@@ -95,10 +96,16 @@ class PPAC_PACK_INCLUDER {
 		 * That file folder is using for searching and
 		 * that folder is base limit for searching.
 		 */
-		foreach ($funcCallers as $funcCaller) {
-			if (isset( $funcCaller["file"] )) {
-				$searchFromFolder = dirname( $funcCaller["file"] ) . DS;
-				break;
+		if ($opt["searchFromFolder"]) {
+			$searchFromFolder = $opt["searchFromFolder"];
+		}
+		else
+		{
+			foreach ($funcCallers as $funcCaller) {
+				if (isset( $funcCaller["file"] )) {
+					$searchFromFolder = dirname( $funcCaller["file"] ) . DS;
+					break;
+				}
 			}
 		}
 
@@ -119,7 +126,13 @@ class PPAC_PACK_INCLUDER {
 		 */
 		if (isset($moduleJSON["firstLoad"])) {
 			foreach ($moduleJSON["firstLoad"] as $path) {
-				self::add($path, array("reloadable"=>false));
+				self::add(
+					$path,
+					array(
+						"reloadable" => false,
+						"searchFromFolder" => $searchFromFolder
+					)
+				);
 			}
 		}
 
@@ -216,12 +229,12 @@ class PPAC_PACK_INCLUDER {
 		/*
 		 * Set first seach area, is Public folder first or last?
 		 */
-		if (self::config("php_modules.Public.addFirst")) {
-			array_unshift($targetDirs, self::config("php_modules.Public.path")); 
+		if (self::config("php_modules.public.addFirst")) {
+			array_unshift($targetDirs, self::config("php_modules.public.path")); 
 		}
 		else
 		{
-			array_push($targetDirs, self::config("php_modules.Public.path")); 
+			array_push($targetDirs, self::config("php_modules.public.path")); 
 		}
 		
 		foreach ($targetDirs as $target) {
